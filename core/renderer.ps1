@@ -62,43 +62,83 @@ function Render-Block {
         [object]$Block,
         [object]$ThemeConfig,
         [string]$Content,
-        [switch]$IsLast
+        [bool]$IsLast = $false,
+        [bool]$IsFirst = $false,
+        [object]$NextBlock = $null
     )
     
     if ([string]::IsNullOrWhiteSpace($Content)) {
         return ""
     }
     
-    $output = ""
-    
-    # Add prefix icon if specified
+    # Handle icon if specified
     if ($Block.icon) {
         $icon = if ($Block.icon.StartsWith('nerd:')) {
             Get-NerdFontIcon -Type $Block.icon.Substring(5)
+        } elseif ($Block.icon.StartsWith('\u')) {
+            # Handle Unicode escapes like \uF007
+            try {
+                [char][int]($Block.icon.Substring(2), 16)
+            } catch {
+                $Block.icon # Fallback to original text
+            }
         } else {
             $Block.icon
         }
         $Content = "$icon $Content"
     }
     
-    # Standard theme rendering
-    $paddedContent = " $Content "
-    Write-ColoredText -Text $paddedContent -ForegroundColor $Block.foreground -BackgroundColor $Block.background -NoNewline
+    # Check if this is a powerline style theme
+    $isPowerlineStyle = ($ThemeConfig.style -eq "powerline" -or ($Block.separator -and $Block.separator.StartsWith('powerline:')))
     
-    # Add separator if not the last block
-    if (-not $IsLast -and $Block.separator) {
-        $separatorSymbol = if ($Block.separator.StartsWith('powerline:')) {
-            Get-PowerlineSymbol -Type $Block.separator.Substring(10)
-        } elseif ($Block.separator) {
-            $Block.separator
-        } else {
-            ""
+    if ($isPowerlineStyle) {
+        # Powerline style rendering
+        
+        # Leading diamond for first block
+        if ($IsFirst -and ($Block.leading_diamond -or $ThemeConfig.leading_diamond)) {
+            $diamond = if ($Block.leading_diamond) { $Block.leading_diamond } else { $ThemeConfig.leading_diamond }
+            try {
+                $diamondChar = if ($diamond.StartsWith('\u')) { [char][int]($diamond.Substring(2), 16) } else { $diamond }
+                Write-ColoredText -Text $diamondChar -ForegroundColor $Block.background -NoNewline
+            } catch {
+                # Fallback diamond
+                Write-Host "◆" -ForegroundColor $Block.background -NoNewline
+            }
         }
         
-        if ($separatorSymbol) {
-            Write-Host $separatorSymbol -NoNewline
+        # Block content with background
+        $paddedContent = " $Content "
+        Write-ColoredText -Text $paddedContent -ForegroundColor $Block.foreground -BackgroundColor $Block.background -NoNewline
+        
+        # Powerline arrow separator
+        if (-not $IsLast -and $NextBlock) {
+            # Use true powerline symbol with color inversion for seamless transition
+            $arrowSymbol = Get-PowerlineSymbolWithFallback -Primary 'powerline-right' -Fallback 'right-arrow'
+            
+            # Current block background becomes arrow foreground, next block background becomes arrow background
+            Write-ColoredText -Text $arrowSymbol -ForegroundColor $Block.background -BackgroundColor $NextBlock.background -NoNewline
         }
-        Write-Host " " -NoNewline
+        elseif ($IsLast) {
+            # Trailing diamond or arrow for last block
+            if ($Block.trailing_diamond -or $ThemeConfig.trailing_diamond) {
+                $diamond = if ($Block.trailing_diamond) { $Block.trailing_diamond } else { $ThemeConfig.trailing_diamond }
+                try {
+                    $diamondChar = if ($diamond.StartsWith('\u')) { [char][int]($diamond.Substring(2), 16) } else { $diamond }
+                    Write-ColoredText -Text $diamondChar -ForegroundColor $Block.background -NoNewline
+                } catch {
+                    # Fallback diamond
+                    Write-Host "◆" -ForegroundColor $Block.background -NoNewline
+                }
+            } else {
+                # Simple arrow termination
+                $arrowSymbol = Get-PowerlineSymbolWithFallback -Primary 'powerline-right' -Fallback 'right-arrow'
+                Write-ColoredText -Text $arrowSymbol -ForegroundColor $Block.background -NoNewline
+            }
+        }
+    } else {
+        # Standard rendering for non-powerline themes
+        $paddedContent = " $Content "
+        Write-ColoredText -Text $paddedContent -ForegroundColor $Block.foreground -BackgroundColor $Block.background -NoNewline
     }
     
     return ""  # Return empty since we're writing directly to host
@@ -117,16 +157,19 @@ function Render-Prompt {
     # Filter enabled blocks first
     $enabledBlocks = $blocks | Where-Object { $_.enabled -ne $false }
     
-    # Render blocks directly to console
+    # Render blocks with proper powerline logic
     for ($i = 0; $i -lt $enabledBlocks.Count; $i++) {
         $block = $enabledBlocks[$i]
         $isLast = ($i -eq ($enabledBlocks.Count - 1))
+        $isFirst = ($i -eq 0)
+        $nextBlock = if (-not $isLast) { $enabledBlocks[$i + 1] } else { $null }
         
         # Get content from the appropriate module
         $content = Invoke-BlockModule -BlockName $block.type -BlockConfig $block -ThemeConfig $themeConfig
         
         if ($content) {
-            Render-Block -Block $block -ThemeConfig $themeConfig -Content $content -IsLast $isLast | Out-Null
+            # Render the block with all powerline parameters
+            Render-Block -Block $block -ThemeConfig $themeConfig -Content $content -IsLast $isLast -IsFirst $isFirst -NextBlock $nextBlock | Out-Null
         }
     }
     

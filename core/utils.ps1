@@ -148,7 +148,14 @@ function Write-ColoredText {
         '#404040' = 'DarkGray'
         '#008000' = 'DarkGreen'
         
-    # ...existing code...
+        # Arrows modern theme colors
+        '#e91e63' = 'Magenta'      # Pink for username
+        '#00bcd4' = 'Cyan'         # Cyan for directory
+        '#4caf50' = 'Green'        # Green for git branch
+        '#9c27b0' = 'DarkMagenta'  # Purple backup
+        '#ff9800' = 'DarkYellow'   # Orange for time
+        
+        # ...existing code...
         
         # Additional color mappings
         '#dc3545' = 'Red'
@@ -203,18 +210,49 @@ function Write-ColoredText {
 
 function Get-PowerlineSymbol {
     param(
-        [ValidateSet('right-arrow', 'left-arrow', 'right-thin', 'left-thin', 'separator')]
+        [ValidateSet('right-arrow', 'left-arrow', 'right-thin', 'left-thin', 'separator', 'powerline-right', 'powerline-left', 'diamond-left', 'diamond-right')]
         [string]$Type
     )
-    # Use clean, reliable arrow symbols that work across terminals
+    
+    # True powerline symbols with fallbacks
     $symbols = @{
-        'right-arrow' = [char]0x25B6  # ▶ Black right-pointing triangle
-        'left-arrow' = [char]0x25C0   # ◀ Black left-pointing triangle  
-        'right-thin' = [char]0x276F   # ❯ Heavy right-pointing angle quotation mark
-        'left-thin' = [char]0x276E    # ❮ Heavy left-pointing angle quotation mark
-        'separator' = [char]0x2502     # │ Box drawings light vertical
+        # Powerline symbols (require Nerd Font)
+        'powerline-right' = [char]0xE0B0  #  Powerline right arrow
+        'powerline-left' = [char]0xE0B2   #  Powerline left arrow  
+        'diamond-left' = [char]0xE0B6     #  Powerline diamond left
+        'diamond-right' = [char]0xE0B4    #  Powerline diamond right
+        
+        # Fallback symbols (standard Unicode)
+        'right-arrow' = [char]0x25B6      # ▶ Black right-pointing triangle
+        'left-arrow' = [char]0x25C0       # ◀ Black left-pointing triangle  
+        'right-thin' = [char]0x276F       # ❯ Heavy right-pointing angle quotation mark
+        'left-thin' = [char]0x276E        # ❮ Heavy left-pointing angle quotation mark
+        'separator' = [char]0x2502         # │ Box drawings light vertical
     }
+    
     return $symbols[$Type]
+}
+
+function Get-PowerlineSymbolWithFallback {
+    param(
+        [string]$Primary,
+        [string]$Fallback = 'right-arrow'
+    )
+    
+    try {
+        # Try to use the primary powerline symbol
+        $symbol = Get-PowerlineSymbol -Type $Primary
+        # Test if the symbol can be displayed (basic check)
+        if ($symbol) {
+            return $symbol
+        }
+    }
+    catch {
+        # Fall back to standard symbol
+        return Get-PowerlineSymbol -Type $Fallback
+    }
+    
+    return Get-PowerlineSymbol -Type $Fallback
 }
 
 function Get-NerdFontIcon {

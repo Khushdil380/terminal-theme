@@ -1,0 +1,64 @@
+{
+  "name": "Arrows Modern",
+  "description": "Modern powerline arrow theme with seamless transitions like oh-my-posh. Requires Nerd Font (MesloLGS NF recommended).",
+  "version": "1.0.0",
+  "style": "powerline",
+  "prompt_symbol": "symbol:chevron",
+  "prompt_symbol_color": "#e91e63",
+  "leading_diamond": "\uE0B6",
+  "trailing_diamond": "\uE0B4",
+  "powerline_symbol": "\uE0B0",
+  "blocks": [
+    {
+      "type": "username",
+      "enabled": true,
+      "foreground": "#ffffff",
+      "background": "#e91e63",
+      "icon": "\uF007",
+      "separator": "powerline:right-arrow",
+      "separator_color": "#e91e63",
+      "powerline_symbol": "\uE0B0",
+      "leading_diamond": "\uE0B6",
+      "template": "{{username}}"
+    },
+    {
+      "type": "directory",
+      "enabled": true,
+      "foreground": "#ffffff",
+      "background": "#00bcd4",
+      "icon": "\uF07C",
+      "separator": "powerline:right-arrow", 
+      "separator_color": "#00bcd4",
+      "powerline_symbol": "\uE0B0",
+      "max_length": 50,
+      "template": "{{path}}"
+    },
+    {
+      "type": "git-branch",
+      "enabled": true,
+      "foreground": "#ffffff",
+      "background": "#4caf50",
+      "icon": "\uE0A0",
+      "separator": "powerline:right-arrow",
+      "separator_color": "#4caf50",
+      "powerline_symbol": "\uE0B0",
+      "trailing_diamond": "\uE0B4",
+      "show_status": true,
+      "staged_icon": "+",
+      "changes_icon": "!",
+      "untracked_icon": "?",
+      "template": "{{branch}} {{status}}"
+    },
+    {
+      "type": "time",
+      "enabled": false,
+      "foreground": "#ffffff",
+      "background": "#ff9800",
+      "icon": "🕐",
+      "separator": "powerline:right-arrow",
+      "separator_color": "#ff9800",
+      "format": "HH:mm",
+      "template": "{{time}}"
+    }
+  ]
+}
