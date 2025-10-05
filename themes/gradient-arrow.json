@@ -1,0 +1,65 @@
+{
+  "name": "Gradient Arrow",
+  "description": "Beautiful gradient arrow theme with smooth color transitions from pink to green",
+  "version": "1.0.0",
+  "prompt_symbol": "symbol:chevron",
+  "prompt_symbol_color": "#00ff88",
+  "blocks": [
+    {
+      "type": "username",
+      "enabled": true,
+      "foreground": "#ffffff",
+      "background": "#ff1493",
+      "icon": "",
+      "separator": "powerline:right-arrow",
+      "separator_color": "#ff1493",
+      "template": "{{username}}"
+    },
+    {
+      "type": "directory",
+      "enabled": true,
+      "foreground": "#ffffff",
+      "background": "#00bfff",
+      "icon": "📁",
+      "separator": "powerline:right-arrow",
+      "separator_color": "#00bfff",
+      "max_length": 30,
+      "template": "{{path}}"
+    },
+    {
+      "type": "git-branch",
+      "enabled": true,
+      "foreground": "#ffffff",
+      "background": "#00ff88",
+      "icon": "🌿",
+      "separator": "powerline:right-arrow",
+      "separator_color": "#00ff88",
+      "show_status": true,
+      "staged_icon": "+",
+      "changes_icon": "!",
+      "untracked_icon": "?",
+      "template": "{{branch}}"
+    },
+    {
+      "type": "hostname",
+      "enabled": false,
+      "foreground": "#ffffff",
+      "background": "#8a2be2",
+      "icon": "",
+      "separator": "powerline:right-arrow",
+      "separator_color": "#8a2be2",
+      "template": "{{hostname}}"
+    },
+    {
+      "type": "time",
+      "enabled": false,
+      "foreground": "#ffffff",
+      "background": "#32cd32",
+      "icon": "",
+      "separator": "powerline:right-arrow",
+      "separator_color": "#32cd32",
+      "format": "HH:mm",
+      "template": "{{time}}"
+    }
+  ]
+}

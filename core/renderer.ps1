@@ -81,10 +81,8 @@ function Render-Block {
         $Content = "$icon $Content"
     }
     
-    # Add padding
+    # Standard theme rendering
     $paddedContent = " $Content "
-    
-    # Create the block with background and foreground colors using Write-Host directly
     Write-ColoredText -Text $paddedContent -ForegroundColor $Block.foreground -BackgroundColor $Block.background -NoNewline
     
     # Add separator if not the last block
@@ -100,6 +98,7 @@ function Render-Block {
         if ($separatorSymbol) {
             Write-Host $separatorSymbol -NoNewline
         }
+        Write-Host " " -NoNewline
     }
     
     return ""  # Return empty since we're writing directly to host
@@ -115,15 +114,13 @@ function Render-Prompt {
     
     $blocks = $themeConfig.blocks
     
+    # Filter enabled blocks first
+    $enabledBlocks = $blocks | Where-Object { $_.enabled -ne $false }
+    
     # Render blocks directly to console
-    for ($i = 0; $i -lt $blocks.Count; $i++) {
-        $block = $blocks[$i]
-        $isLast = ($i -eq ($blocks.Count - 1))
-        
-        # Skip disabled blocks
-        if ($block.enabled -eq $false) {
-            continue
-        }
+    for ($i = 0; $i -lt $enabledBlocks.Count; $i++) {
+        $block = $enabledBlocks[$i]
+        $isLast = ($i -eq ($enabledBlocks.Count - 1))
         
         # Get content from the appropriate module
         $content = Invoke-BlockModule -BlockName $block.type -BlockConfig $block -ThemeConfig $themeConfig

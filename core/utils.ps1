@@ -148,6 +148,8 @@ function Write-ColoredText {
         '#404040' = 'DarkGray'
         '#008000' = 'DarkGreen'
         
+    # ...existing code...
+        
         # Additional color mappings
         '#dc3545' = 'Red'
         '#28a745' = 'Green'
@@ -204,15 +206,14 @@ function Get-PowerlineSymbol {
         [ValidateSet('right-arrow', 'left-arrow', 'right-thin', 'left-thin', 'separator')]
         [string]$Type
     )
-    
+    # Use clean, reliable arrow symbols that work across terminals
     $symbols = @{
-        'right-arrow' = '>'
-        'left-arrow' = '<'
-        'right-thin' = '|'
-        'left-thin' = '|'
-        'separator' = '|'
+        'right-arrow' = [char]0x25B6  # ▶ Black right-pointing triangle
+        'left-arrow' = [char]0x25C0   # ◀ Black left-pointing triangle  
+        'right-thin' = [char]0x276F   # ❯ Heavy right-pointing angle quotation mark
+        'left-thin' = [char]0x276E    # ❮ Heavy left-pointing angle quotation mark
+        'separator' = [char]0x2502     # │ Box drawings light vertical
     }
-    
     return $symbols[$Type]
 }
 
@@ -241,12 +242,10 @@ function Get-NerdFontIcon {
 
 function Get-PromptSymbol {
     param(
-        [ValidateSet('arrow', 'lambda', 'chevron', 'triangle')]
+        [ValidateSet('lambda', 'chevron', 'triangle')]
         [string]$Type = 'chevron'
     )
-    
     $symbols = @{
-        'arrow' = '->'
         'lambda' = 'L'
         'chevron' = '>'
         'triangle' = '>'
@@ -319,22 +318,24 @@ function Compress-Path {
         return $Path
     }
     
-    $parts = $Path -split [IO.Path]::DirectorySeparatorChar
+    # Use consistent separator
+    $separator = [IO.Path]::DirectorySeparatorChar
+    $parts = $Path -split [regex]::Escape($separator)
+    
     if ($parts.Count -le 3) {
         return $Path
     }
     
     $first = $parts[0]
     $last = $parts[-1]
-    $middle = $parts[1..($parts.Count-2)]
     
-    $compressed = "$first\...\$last"
+    $compressed = "$first$separator...$separator$last"
     
     if ($compressed.Length -le $MaxLength) {
         return $compressed
     }
     
-    return "...\$last"
+    return "...$separator$last"
 }
 
 # Functions and variables are available globally when dot-sourced

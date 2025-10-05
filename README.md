@@ -47,6 +47,7 @@ Set-PSTheme minimal
 | **retro-neon** | Cyberpunk-inspired theme with bright neon colors | Retro-futuristic, vibrant | ![Retro Neon Theme](assets/retro-neon-preview.png) |
 | **gradient-modern** | Modern purple gradient with smooth transitions | Contemporary, sleek | ![Gradient Modern Theme](assets/gradient-modern-preview.png) |
 | **minimal** | Clean and minimal with subtle colors | Minimalist, distraction-free | ![Minimal Theme](assets/minimal-preview.png) |
+...existing code...
 
 > **Note**: Screenshot previews show the themes in Windows Terminal with a Nerd Font. Actual appearance may vary based on your terminal and font configuration.
 
