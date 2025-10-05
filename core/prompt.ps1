@@ -7,8 +7,8 @@ $script:PSThemeRoot = Split-Path $PSScriptRoot -Parent
 . "$PSScriptRoot\renderer.ps1"
 
 # Set the default theme path
-$script:PSThemeConfig.ThemesPath = Join-Path $script:PSThemeRoot "themes"
-$script:PSThemeConfig.ModulesPath = Join-Path $script:PSThemeRoot "modules"
+$global:PSThemeConfig.ThemesPath = Join-Path $script:PSThemeRoot "themes"
+$global:PSThemeConfig.ModulesPath = Join-Path $script:PSThemeRoot "modules"
 
 function prompt {
     try {
@@ -17,7 +17,7 @@ function prompt {
         $ErrorActionPreference = 'SilentlyContinue'
         
         # Get the rendered prompt
-        $promptText = Render-Prompt -ThemeName $script:PSThemeConfig.CurrentTheme
+        $promptText = Render-Prompt -ThemeName $global:PSThemeConfig.CurrentTheme
         
         # Restore error action preference
         $ErrorActionPreference = $previousErrorActionPreference
@@ -70,7 +70,7 @@ function Get-PSThemes {
         Get-PSThemes
     #>
     
-    $themesPath = $script:PSThemeConfig.ThemesPath
+    $themesPath = $global:PSThemeConfig.ThemesPath
     
     if (Test-Path $themesPath) {
         $themeFiles = Get-ChildItem -Path $themesPath -Filter "*.json"
@@ -78,7 +78,7 @@ function Get-PSThemes {
             [PSCustomObject]@{
                 Name = [System.IO.Path]::GetFileNameWithoutExtension($_.Name)
                 Path = $_.FullName
-                Current = ([System.IO.Path]::GetFileNameWithoutExtension($_.Name) -eq $script:PSThemeConfig.CurrentTheme)
+                Current = ([System.IO.Path]::GetFileNameWithoutExtension($_.Name) -eq $global:PSThemeConfig.CurrentTheme)
             }
         }
         return $themes
@@ -102,15 +102,15 @@ function Get-PSThemeInfo {
         Get-PSThemeInfo
     #>
     
-    $currentTheme = $script:PSThemeConfig.CurrentTheme
+    $currentTheme = $global:PSThemeConfig.CurrentTheme
     $themeConfig = Get-ThemeConfig -ThemeName $currentTheme
     
     if ($themeConfig) {
         return [PSCustomObject]@{
             CurrentTheme = $currentTheme
-            ThemesPath = $script:PSThemeConfig.ThemesPath
-            ModulesPath = $script:PSThemeConfig.ModulesPath
-            SupportsAnsi = $script:PSThemeConfig.SupportsAnsi
+            ThemesPath = $global:PSThemeConfig.ThemesPath
+            ModulesPath = $global:PSThemeConfig.ModulesPath
+            SupportsAnsi = $global:PSThemeConfig.SupportsAnsi
             BlockCount = $themeConfig.blocks.Count
             EnabledBlocks = ($themeConfig.blocks | Where-Object { $_.enabled -ne $false }).Count
             ThemeConfig = $themeConfig
@@ -135,19 +135,19 @@ function Test-PSThemeSetup {
     #>
     
     $results = @{
-        ThemesDirectory = Test-Path $script:PSThemeConfig.ThemesPath
-        ModulesDirectory = Test-Path $script:PSThemeConfig.ModulesPath
-        DefaultTheme = Test-Path (Join-Path $script:PSThemeConfig.ThemesPath "default.json")
-        AnsiSupport = $script:PSThemeConfig.SupportsAnsi
+        ThemesDirectory = Test-Path $global:PSThemeConfig.ThemesPath
+        ModulesDirectory = Test-Path $global:PSThemeConfig.ModulesPath
+        DefaultTheme = Test-Path (Join-Path $global:PSThemeConfig.ThemesPath "default.json")
+        AnsiSupport = $global:PSThemeConfig.SupportsAnsi
         Issues = @()
     }
     
     if (-not $results.ThemesDirectory) {
-        $results.Issues += "Themes directory not found: $($script:PSThemeConfig.ThemesPath)"
+        $results.Issues += "Themes directory not found: $($global:PSThemeConfig.ThemesPath)"
     }
     
     if (-not $results.ModulesDirectory) {
-        $results.Issues += "Modules directory not found: $($script:PSThemeConfig.ModulesPath)"
+        $results.Issues += "Modules directory not found: $($global:PSThemeConfig.ModulesPath)"
     }
     
     if (-not $results.DefaultTheme) {
@@ -165,7 +165,7 @@ function Test-PSThemeSetup {
 
 # Welcome message when theme is loaded
 Write-Host "PowerShell Theme Framework loaded!" -ForegroundColor Cyan
-Write-Host "Current theme: $($script:PSThemeConfig.CurrentTheme)" -ForegroundColor Yellow
+Write-Host "Current theme: $($global:PSThemeConfig.CurrentTheme)" -ForegroundColor Yellow
 Write-Host "Use 'Get-PSThemes' to see available themes or 'Set-PSTheme <name>' to change themes." -ForegroundColor Gray
 
 # Functions are available globally when dot-sourced

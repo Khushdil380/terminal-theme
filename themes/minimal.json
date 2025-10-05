@@ -2,31 +2,64 @@
   "name": "Minimal",
   "description": "Clean and minimal theme with subtle colors",
   "version": "1.0.0",
-  "prompt_symbol": "symbol:arrow",
-  "prompt_symbol_color": "#6b7280",
+  "prompt_symbol": "symbol:chevron",
+  "prompt_symbol_color": "#ffffff",
   "blocks": [
+    {
+      "type": "username",
+      "enabled": false,
+      "foreground": "#ffffff",
+      "background": "#404040",
+      "icon": "USER",
+      "separator": "powerline:right-arrow",
+      "separator_color": "#404040",
+      "template": "{{username}}"
+    },
+    {
+      "type": "hostname",
+      "enabled": false,
+      "foreground": "#ffffff",
+      "background": "#404040",
+      "icon": "PC",
+      "separator": "powerline:right-arrow",
+      "separator_color": "#404040",
+      "template": "{{hostname}}"
+    },
     {
       "type": "directory",
       "enabled": true,
-      "foreground": "#374151",
-      "background": "#f3f4f6",
-      "icon": "[",
-      "separator": "",
-      "max_length": 60,
+      "foreground": "#ffffff",
+      "background": "#404040",
+      "icon": "DIR",
+      "separator": "powerline:right-arrow",
+      "separator_color": "#404040",
+      "max_length": 50,
       "template": "{{path}}"
     },
     {
       "type": "git-branch",
       "enabled": true,
-      "foreground": "#059669",
-      "background": "#ecfdf5",
-      "icon": "git",
-      "separator": "",
+      "foreground": "#ffffff",
+      "background": "#008000",
+      "icon": "",
+      "separator": "powerline:right-arrow",
+      "separator_color": "#008000",
       "show_status": true,
       "staged_icon": "+",
-      "changes_icon": "~",
+      "changes_icon": "!",
       "untracked_icon": "?",
-      "template": " {{branch}}{{status}}"
+      "template": "{{branch}} {{status}}"
+    },
+    {
+      "type": "time",
+      "enabled": false,
+      "foreground": "#ffffff",
+      "background": "#404040",
+      "icon": "TIME",
+      "separator": "powerline:right-arrow",
+      "separator_color": "#404040",
+      "format": "HH:mm",
+      "template": "{{time}}"
     }
   ]
 }

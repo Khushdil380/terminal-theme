@@ -72,8 +72,8 @@ $installContent = @"
 if (Test-Path "`$script:PSThemeFrameworkRoot\core\prompt.ps1") {
     . "`$script:PSThemeFrameworkRoot\core\prompt.ps1"
     
-    # Set initial theme
-    Set-PSTheme -ThemeName "$ThemeName"
+    # The theme framework will automatically load the saved theme from config
+    # If no saved theme exists, it will default to "$ThemeName"
 } else {
     Write-Warning "PowerShell Theme Framework not found at: `$script:PSThemeFrameworkRoot"
 }

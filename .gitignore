@@ -1,0 +1,73 @@
+# PowerShell Theme Framework .gitignore
+
+# Windows Thumbnail Cache
+Thumbs.db
+ehthumbs.db
+
+# Windows Folder Config
+Desktop.ini
+
+# Recycle Bin
+$RECYCLE.BIN/
+
+# PowerShell Profile Backups (created during installation)
+*.backup.*
+
+# Theme Config (user preferences - optional to track)
+config/current-theme.txt
+
+# Temporary Files
+*.tmp
+*.temp
+temp/
+tmp/
+
+# Logs
+*.log
+logs/
+
+# PowerShell Module Cache
+*.psd1
+*.psm1
+
+# Test Files
+test-*.ps1
+debug-*.ps1
+*.test
+test.txt
+
+# IDE and Editor Files
+.vscode/settings.json
+.vscode/launch.json
+*.swp
+*.swo
+*~
+
+# OS Generated Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+
+# PowerShell Execution Policy Bypass Files
+*.ps1.lnk
+
+# Screenshot Drafts (keep final previews)
+screenshots/draft/
+*.draft.png
+
+# User-specific themes (unless contributing)
+themes/user-*
+themes/custom-*
+themes/personal-*
+
+# Backup directories
+backup/
+backups/
+
+# Development and testing
+dev/
+development/
+testing/
+*.dev.ps1

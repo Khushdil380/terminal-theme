@@ -2,12 +2,48 @@
 # Collection of helper functions for colors, separators, and formatting
 
 # Global configuration
-$script:PSThemeConfig = @{
+$global:PSThemeConfig = @{
     CurrentTheme = "default"
     ThemesPath = Join-Path $PSScriptRoot "..\themes"
     ModulesPath = Join-Path $PSScriptRoot "..\modules"
+    ConfigPath = Join-Path $PSScriptRoot "..\config"
     SupportsAnsi = $false  # Temporarily disabled to use fallback colors
 }
+
+# Create config directory if it doesn't exist
+if (-not (Test-Path $global:PSThemeConfig.ConfigPath)) {
+    New-Item -ItemType Directory -Path $global:PSThemeConfig.ConfigPath -Force | Out-Null
+}
+
+# Load saved theme on startup
+function Get-SavedTheme {
+    $configFile = Join-Path $global:PSThemeConfig.ConfigPath "current-theme.txt"
+    if (Test-Path $configFile) {
+        $savedTheme = Get-Content $configFile -Raw | ForEach-Object { $_.Trim() }
+        if ($savedTheme -and (Test-Path (Join-Path $global:PSThemeConfig.ThemesPath "$savedTheme.json"))) {
+            return $savedTheme
+        }
+    }
+    return "default"
+}
+
+# Save current theme to persistent storage
+function Save-CurrentTheme {
+    param([string]$ThemeName)
+    
+    $configFile = Join-Path $global:PSThemeConfig.ConfigPath "current-theme.txt"
+    try {
+        $ThemeName | Out-File -FilePath $configFile -Encoding UTF8 -NoNewline
+        return $true
+    }
+    catch {
+        Write-Warning "Failed to save theme preference: $_"
+        return $false
+    }
+}
+
+# Initialize with saved theme
+$global:PSThemeConfig.CurrentTheme = Get-SavedTheme
 
 # Color utility functions
 function ConvertTo-AnsiColor {
@@ -75,18 +111,9 @@ function Write-ColoredText {
     
     # Map colors to PowerShell console colors
     $colorMap = @{
+        # Basic colors
         '#ffffff' = 'White'
         '#000000' = 'Black'
-        '#0078d4' = 'Blue'
-        '#106ebe' = 'DarkBlue'
-        '#2d5016' = 'DarkGreen'
-        '#f14c4c' = 'Red'
-        '#00ffff' = 'Cyan'
-        '#ff00ff' = 'Magenta'
-        '#ffff00' = 'Yellow'
-        '#00ff00' = 'Green'
-        '#ff0080' = 'Magenta'
-        '#8000ff' = 'DarkMagenta'
         'white' = 'White'
         'black' = 'Black'
         'red' = 'Red'
@@ -95,6 +122,42 @@ function Write-ColoredText {
         'yellow' = 'Yellow'
         'cyan' = 'Cyan'
         'magenta' = 'Magenta'
+        
+        # Default theme colors
+        '#0078d4' = 'Blue'
+        '#106ebe' = 'DarkBlue'
+        '#2d5016' = 'DarkGreen'
+        '#f14c4c' = 'Red'
+        
+        # Retro neon theme colors
+        '#00ffff' = 'Cyan'
+        '#ff00ff' = 'Magenta'
+        '#ffff00' = 'Yellow'
+        '#00ff00' = 'Green'
+        '#ff0080' = 'Magenta'
+        '#8000ff' = 'DarkMagenta'
+        
+        # Gradient modern theme colors
+        '#6366f1' = 'DarkBlue'
+        '#8b5cf6' = 'DarkMagenta'
+        '#a855f7' = 'Magenta'
+        '#c084fc' = 'DarkMagenta'
+        '#ddd6fe' = 'Gray'
+        
+        # Minimal theme colors
+        '#404040' = 'DarkGray'
+        '#008000' = 'DarkGreen'
+        
+        # Additional color mappings
+        '#dc3545' = 'Red'
+        '#28a745' = 'Green'
+        '#ffc107' = 'Yellow'
+        '#17a2b8' = 'Cyan'
+        '#6f42c1' = 'DarkMagenta'
+        '#e83e8c' = 'Magenta'
+        '#fd7e14' = 'DarkYellow'
+        '#20c997' = 'DarkCyan'
+        '#6c757d' = 'DarkGray'
     }
     
     $fgColor = if ($colorMap.ContainsKey($ForegroundColor.ToLower())) { 
@@ -103,23 +166,35 @@ function Write-ColoredText {
         'White' 
     }
     
-    $bgColor = if ($BackgroundColor -and $colorMap.ContainsKey($BackgroundColor.ToLower())) { 
+    $bgColor = if ($BackgroundColor -and $BackgroundColor -ne "" -and $colorMap.ContainsKey($BackgroundColor.ToLower())) { 
         $colorMap[$BackgroundColor.ToLower()] 
     } else { 
         $null 
     }
     
-    if ($BackgroundColor -and $bgColor) {
-        if ($NoNewline) {
-            Write-Host $Text -ForegroundColor $fgColor -BackgroundColor $bgColor -NoNewline
+    # Debug output disabled
+    
+    try {
+        if ($BackgroundColor -and $bgColor) {
+            if ($NoNewline) {
+                Write-Host $Text -ForegroundColor $fgColor -BackgroundColor $bgColor -NoNewline
+            } else {
+                Write-Host $Text -ForegroundColor $fgColor -BackgroundColor $bgColor
+            }
         } else {
-            Write-Host $Text -ForegroundColor $fgColor -BackgroundColor $bgColor
+            if ($NoNewline) {
+                Write-Host $Text -ForegroundColor $fgColor -NoNewline
+            } else {  
+                Write-Host $Text -ForegroundColor $fgColor
+            }
         }
-    } else {
+    }
+    catch {
+        # Fallback if colors don't work
         if ($NoNewline) {
-            Write-Host $Text -ForegroundColor $fgColor -NoNewline
+            Write-Host $Text -NoNewline
         } else {
-            Write-Host $Text -ForegroundColor $fgColor
+            Write-Host $Text
         }
     }
 }

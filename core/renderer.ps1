@@ -5,13 +5,13 @@
 . "$PSScriptRoot\utils.ps1"
 
 function Get-ThemeConfig {
-    param([string]$ThemeName = $script:PSThemeConfig.CurrentTheme)
+    param([string]$ThemeName = $global:PSThemeConfig.CurrentTheme)
     
-    $themePath = Join-Path $script:PSThemeConfig.ThemesPath "$ThemeName.json"
+    $themePath = Join-Path $global:PSThemeConfig.ThemesPath "$ThemeName.json"
     
     if (-not (Test-Path $themePath)) {
         Write-Warning "Theme '$ThemeName' not found. Using default theme."
-        $themePath = Join-Path $script:PSThemeConfig.ThemesPath "default.json"
+        $themePath = Join-Path $global:PSThemeConfig.ThemesPath "default.json"
     }
     
     try {
@@ -31,7 +31,7 @@ function Invoke-BlockModule {
         [object]$ThemeConfig
     )
     
-    $modulePath = Join-Path $script:PSThemeConfig.ModulesPath "$BlockName.ps1"
+    $modulePath = Join-Path $global:PSThemeConfig.ModulesPath "$BlockName.ps1"
     
     if (-not (Test-Path $modulePath)) {
         Write-Warning "Module '$BlockName' not found at $modulePath"
@@ -106,7 +106,7 @@ function Render-Block {
 }
 
 function Render-Prompt {
-    param([string]$ThemeName = $script:PSThemeConfig.CurrentTheme)
+    param([string]$ThemeName = $global:PSThemeConfig.CurrentTheme)
     
     $themeConfig = Get-ThemeConfig -ThemeName $ThemeName
     if (-not $themeConfig) {
@@ -156,10 +156,14 @@ function Render-Prompt {
 function Set-CurrentTheme {
     param([string]$ThemeName)
     
-    $themePath = Join-Path $script:PSThemeConfig.ThemesPath "$ThemeName.json"
+    $themePath = Join-Path $global:PSThemeConfig.ThemesPath "$ThemeName.json"
     
     if (Test-Path $themePath) {
-        $script:PSThemeConfig.CurrentTheme = $ThemeName
+        $global:PSThemeConfig.CurrentTheme = $ThemeName
+        
+        # Save theme preference to persistent storage
+        Save-CurrentTheme -ThemeName $ThemeName | Out-Null
+        
         Write-Host "Theme changed to: $ThemeName" -ForegroundColor Green
         return $true
     }

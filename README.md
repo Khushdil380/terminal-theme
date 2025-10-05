@@ -11,7 +11,8 @@ A modular Windows PowerShell theme framework inspired by oh-my-posh, designed fo
 - 🧩 **Modular Design** - Easy to add, remove, or customize prompt blocks
 - 🎨 **JSON Configuration** - Simple theme definition using JSON files  
 - 🎭 **Multiple Themes** - Built-in themes: default, retro-neon, gradient-modern, minimal
-- 🔠 **Nerd Font Support** - Beautiful icons and symbols using Nerd Fonts
+- � **Theme Persistence** - Automatically saves and loads your preferred theme across sessions
+- �🔠 **Nerd Font Support** - Beautiful icons and symbols using Nerd Fonts
 - 🌿 **Git Integration** - Shows branch, status, and changes automatically
 - ⚙️ **Easy Management** - Simple install/uninstall scripts
 - 🌈 **ANSI Support** - Full color support with graceful fallback
@@ -21,7 +22,7 @@ A modular Windows PowerShell theme framework inspired by oh-my-posh, designed fo
 
 ```powershell
 # 1. Clone or download this repository
-git clone <repository-url> PowerShell-Themes
+git clone https://github.com/Khushdil380/terminal-theme.git PowerShell-Themes
 
 # 2. Navigate to the directory
 cd PowerShell-Themes
@@ -40,12 +41,14 @@ Set-PSTheme minimal
 
 ## 🎨 Available Themes
 
-| Theme | Description | Style |
-|-------|-------------|-------|
-| **default** | Professional blue theme with clean powerline separators | Corporate, clean |
-| **retro-neon** | Cyberpunk-inspired theme with bright neon colors | Retro-futuristic, vibrant |
-| **gradient-modern** | Modern purple gradient with smooth transitions | Contemporary, sleek |
-| **minimal** | Clean and minimal with subtle colors | Minimalist, distraction-free |
+| Theme | Description | Style | Preview |
+|-------|-------------|-------|---------|
+| **default** | Professional blue theme with clean powerline separators | Corporate, clean | ![Default Theme](assets/default-preview.png) |
+| **retro-neon** | Cyberpunk-inspired theme with bright neon colors | Retro-futuristic, vibrant | ![Retro Neon Theme](assets/retro-neon-preview.png) |
+| **gradient-modern** | Modern purple gradient with smooth transitions | Contemporary, sleek | ![Gradient Modern Theme](assets/gradient-modern-preview.png) |
+| **minimal** | Clean and minimal with subtle colors | Minimalist, distraction-free | ![Minimal Theme](assets/minimal-preview.png) |
+
+> **Note**: Screenshot previews show the themes in Windows Terminal with a Nerd Font. Actual appearance may vary based on your terminal and font configuration.
 
 ## 📁 Project Structure
 
@@ -65,7 +68,7 @@ PowerShell-Themes/
 # List all available themes
 Get-PSThemes
 
-# Change theme for current session
+# Change theme (automatically persists across sessions)
 Set-PSTheme <theme-name>
 
 # Get current theme information
@@ -73,10 +76,15 @@ Get-PSThemeInfo
 
 # Test framework installation
 Test-PSThemeSetup
-
-# Change theme permanently
-.\scripts\install.ps1 -ThemeName <theme-name> -Force
 ```
+
+### Theme Persistence
+
+Themes are automatically saved when you change them with `Set-PSTheme`. Your selected theme will persist across:
+- ✅ New PowerShell tabs
+- ✅ New PowerShell windows  
+- ✅ System restarts
+- ✅ Terminal application restarts
 
 ## 📋 Requirements
 
@@ -167,8 +175,9 @@ See the [Theme Creation Guide](docs/create-theme.md) for detailed instructions.
 - Navigate to a Git repository to see git blocks
 
 **Theme not persisting after restart?**
-- Use `.\scripts\install.ps1 -ThemeName <theme> -Force` for permanent changes
-- Session-only changes use `Set-PSTheme <theme>`
+- Themes should automatically persist when using `Set-PSTheme <theme>`
+- Check if `config/current-theme.txt` exists and contains your theme name
+- If issues persist, reinstall with `.\scripts\install.ps1 -Force`
 
 Run `Test-PSThemeSetup` to diagnose installation issues.
 

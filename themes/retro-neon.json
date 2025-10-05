@@ -45,7 +45,7 @@
       "separator": "powerline:right-arrow",
       "separator_color": "#ff0080",
       "show_status": true,
-      "staged_icon": "*",
+      "staged_icon": "+",
       "changes_icon": "!",
       "untracked_icon": "?",
       "template": "{{branch}} {{status}}"
