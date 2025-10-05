@@ -1,0 +1,65 @@
+{
+  "name": "Gradient Modern",
+  "description": "Modern gradient theme with smooth color transitions",
+  "version": "1.0.0",
+  "prompt_symbol": "symbol:chevron",
+  "prompt_symbol_color": "#6366f1",
+  "blocks": [
+    {
+      "type": "username",
+      "enabled": true,
+      "foreground": "#ffffff",
+      "background": "#6366f1",
+      "icon": "nerd:user",
+      "separator": "powerline:right-arrow",
+      "separator_color": "#6366f1",
+      "template": "{{username}}"
+    },
+    {
+      "type": "hostname",
+      "enabled": true,
+      "foreground": "#ffffff",
+      "background": "#8b5cf6",
+      "icon": "nerd:computer",
+      "separator": "powerline:right-arrow",
+      "separator_color": "#8b5cf6",
+      "template": "{{hostname}}"
+    },
+    {
+      "type": "directory",
+      "enabled": true,
+      "foreground": "#ffffff",
+      "background": "#a855f7",
+      "icon": "nerd:folder",
+      "separator": "powerline:right-arrow",
+      "separator_color": "#a855f7",
+      "max_length": 45,
+      "template": "{{path}}"
+    },
+    {
+      "type": "git-branch",
+      "enabled": true,
+      "foreground": "#ffffff",
+      "background": "#c084fc",
+      "icon": "nerd:git-branch",
+      "separator": "powerline:right-arrow",
+      "separator_color": "#c084fc",
+      "show_status": true,
+      "staged_icon": "●",
+      "changes_icon": "◐",
+      "untracked_icon": "○",
+      "template": "{{branch}} {{status}}"
+    },
+    {
+      "type": "time",
+      "enabled": false,
+      "foreground": "#ffffff",
+      "background": "#ddd6fe",
+      "icon": "nerd:clock",
+      "separator": "powerline:right-arrow",
+      "separator_color": "#ddd6fe",
+      "format": "HH:mm",
+      "template": "{{time}}"
+    }
+  ]
+}

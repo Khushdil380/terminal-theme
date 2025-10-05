@@ -1,0 +1,74 @@
+{
+  "name": "Retro Neon",
+  "description": "Cyberpunk-inspired neon theme with bright colors",
+  "version": "1.0.0",
+  "prompt_symbol": "symbol:chevron",
+  "prompt_symbol_color": "#ff00ff",
+  "blocks": [
+    {
+      "type": "username",
+      "enabled": true,
+      "foreground": "#000000",
+      "background": "#00ffff",
+      "icon": "USER",
+      "separator": "powerline:right-arrow",
+      "separator_color": "#00ffff",
+      "template": "{{username}}"
+    },
+    {
+      "type": "hostname",
+      "enabled": true,
+      "foreground": "#000000",
+      "background": "#ff00ff",
+      "icon": "PC",
+      "separator": "powerline:right-arrow",
+      "separator_color": "#ff00ff",
+      "template": "{{hostname}}"
+    },
+    {
+      "type": "directory",
+      "enabled": true,
+      "foreground": "#000000",
+      "background": "#ffff00",
+      "icon": "DIR",
+      "separator": "powerline:right-arrow",
+      "separator_color": "#ffff00",
+      "max_length": 40,
+      "template": "{{path}}"
+    },
+    {
+      "type": "git-branch",
+      "enabled": true,
+      "foreground": "#ffffff",
+      "background": "#ff0080",
+      "icon": "",
+      "separator": "powerline:right-arrow",
+      "separator_color": "#ff0080",
+      "show_status": true,
+      "staged_icon": "*",
+      "changes_icon": "!",
+      "untracked_icon": "?",
+      "template": "{{branch}} {{status}}"
+    },
+    {
+      "type": "time",
+      "enabled": true,
+      "foreground": "#000000",
+      "background": "#00ff00",
+      "icon": "TIME",
+      "separator": "powerline:right-arrow",
+      "separator_color": "#00ff00",
+      "format": "HH:mm",
+      "template": "{{time}}"
+    },
+    {
+      "type": "symbol",
+      "enabled": true,
+      "foreground": "#ffffff",
+      "background": "#8000ff",
+      "separator": "",
+      "symbol_type": "custom",
+      "symbol": ">"
+    }
+  ]
+}

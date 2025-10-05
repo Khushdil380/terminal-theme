@@ -1,0 +1,65 @@
+{
+  "name": "Default",
+  "description": "Clean and professional default theme",
+  "version": "1.0.0",
+  "prompt_symbol": "symbol:chevron",
+  "prompt_symbol_color": "#ffffff",
+  "blocks": [
+    {
+      "type": "username",
+      "enabled": true,
+      "foreground": "#ffffff",
+      "background": "#0078d4",
+      "icon": "nerd:user",
+      "separator": "powerline:right-arrow",
+      "separator_color": "#0078d4",
+      "template": "{{username}}"
+    },
+    {
+      "type": "hostname",
+      "enabled": true,
+      "foreground": "#ffffff",
+      "background": "#106ebe",
+      "icon": "nerd:computer",
+      "separator": "powerline:right-arrow",
+      "separator_color": "#106ebe",
+      "template": "{{hostname}}"
+    },
+    {
+      "type": "directory",
+      "enabled": true,
+      "foreground": "#ffffff",
+      "background": "#2d5016",
+      "icon": "nerd:folder",
+      "separator": "powerline:right-arrow",
+      "separator_color": "#2d5016",
+      "max_length": 50,
+      "template": "{{path}}"
+    },
+    {
+      "type": "git-branch",
+      "enabled": true,
+      "foreground": "#ffffff",
+      "background": "#f14c4c",
+      "icon": "nerd:git-branch",
+      "separator": "powerline:right-arrow",
+      "separator_color": "#f14c4c",
+      "show_status": true,
+      "staged_icon": "✓",
+      "changes_icon": "●",
+      "untracked_icon": "?",
+      "template": "{{branch}} {{status}}"
+    },
+    {
+      "type": "time",
+      "enabled": false,
+      "foreground": "#000000",
+      "background": "#ffff00",
+      "icon": "nerd:clock",
+      "separator": "powerline:right-arrow",
+      "separator_color": "#ffff00",
+      "format": "HH:mm:ss",
+      "template": "{{time}}"
+    }
+  ]
+}
