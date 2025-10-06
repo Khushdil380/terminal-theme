@@ -1,9 +1,6 @@
 # PowerShell Theme Framework
 
-[![PowerShell](https://img.shields.io/badge/PowerShell-5391FE?style=flat&logo=powershell&logoColor=white)](https://github.com/PowerShell/PowerShell)  
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)  
-[![Platform](https://img.shields.io/badge/platform-Windows-blue.svg)](https://www.microsoft.com/windows)  
-[![Architecture](https://img.shields.io/badge/Architecture-Truly%20Modular-brightgreen.svg)](#-true-modularity)
+[![PowerShell](https://img.shields.io/badge/PowerShell-5391FE?style=flat&logo=powershell&logoColor=white)](https://github.com/PowerShell/PowerShell)  [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)  [![Platform](https://img.shields.io/badge/platform-Windows-blue.svg)](https://www.microsoft.com/windows)  [![Architecture](https://img.shields.io/badge/Architecture-Truly%20Modular-brightgreen.svg)](#-true-modularity)
 
 A **truly modular** Windows PowerShell theme framework with **complete theme independence**. Each theme can be customized individually without affecting others.
 
