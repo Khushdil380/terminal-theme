@@ -1,53 +1,57 @@
 # PowerShell Theme Framework
 
-A modular Windows PowerShell theme framework inspired by oh-my-posh, designed for easy customization and professional-looking prompts.
+A truly modular Windows PowerShell theme framework with complete theme independence, designed for easy customization and professional-looking terminals.
 
 ![PowerShell Theme Framework](assets/preview.png)
 
 ## 🌟 Features
 
-- **Modular Design**: Easy to add, remove, or customize blocks
-- **JSON Configuration**: Simple theme definition using JSON files
-- **Multiple Themes**: Built-in themes (default, retro-neon, gradient-modern, minimal)
+- **True Modular Architecture**: Complete theme independence with zero cross-dependencies
+- **Self-Contained Themes**: Each theme has its own colors, rendering logic, and configuration
+- **100% Customizable**: Update colors, spacing, borders, icons without affecting other themes
+- **Multiple Built-in Themes**: arrows-modern, gradient-modern, default, retro-neon, minimal
 - **Nerd Font Support**: Beautiful icons and symbols using Nerd Fonts
-- **Git Integration**: Shows branch, status, and changes
-- **Easy Management**: Simple install/uninstall scripts
+- **Git Integration**: Shows branch, status, and changes with theme-specific styling
+- **Easy Management**: Simple theme switching and management commands
 - **ANSI Support**: Full color support with graceful fallback
-- **Professional Appearance**: Modern, clean prompt designs
+- **Professional Appearance**: Modern, clean terminal designs
+- **Plugin Architecture**: Add custom modules without core changes
 
 ## 📁 Project Structure
 
 ```
-PowerShell-Themes/
+Terminal/
 │
-├── themes/                        # Theme definitions (JSON files)
-│   ├── default.json              # Professional default theme
-│   ├── retro-neon.json           # Cyberpunk-inspired neon theme
-│   ├── gradient-modern.json      # Modern gradient theme
-│   └── minimal.json              # Clean minimal theme
+├── core/                          # Core framework and themes
+│   ├── theme-manager.ps1         # Theme loading and management
+│   ├── utils.ps1                 # Shared utility functions
+│   ├── config.ps1                # Global configuration
+│   │
+│   ├── arrows-modern/             # Individual theme folders
+│   │   ├── colors.ps1            # Theme-specific colors
+│   │   ├── renderer.ps1          # Theme rendering config
+│   │   └── utils.ps1             # Theme rendering functions
+│   │
+│   ├── gradient-modern/           # Complete theme independence
+│   │   ├── colors.ps1            # Independent color palette
+│   │   ├── renderer.ps1          # Independent configuration
+│   │   └── utils.ps1             # Independent rendering logic
+│   │
+│   └── [other-themes]/            # Each theme is self-contained
 │
-├── core/                          # Core framework logic
-│   ├── prompt.ps1                # Main prompt function and commands
-│   ├── renderer.ps1              # Block rendering engine
-│   └── utils.ps1                 # Utility functions and helpers
-│
-├── modules/                       # Modular blocks
-│   ├── username.ps1              # Username display
-│   ├── hostname.ps1              # Computer name display
-│   ├── directory.ps1             # Current directory with compression
-│   ├── git-branch.ps1            # Git branch and status
+├── modules/                       # Loadable functionality modules
+│   ├── user.ps1                  # User information display
+│   ├── path.ps1                  # Current directory with compression
+│   ├── git.ps1                   # Git branch and status
 │   ├── time.ps1                  # Time/date display
-│   └── symbol.ps1                # Custom symbols and indicators
+│   └── system.ps1                # System information
 │
-├── scripts/                       # Management scripts
-│   ├── install.ps1               # Install theme framework
-│   ├── uninstall.ps1             # Remove theme framework
-│   ├── apply-theme.ps1           # Apply/reload theme
-│   └── change-theme.ps1          # Switch between themes
-│
-├── docs/                          # Documentation
-│   ├── README.md                 # This file
-│   ├── usage.md                  # Usage instructions
+├── docs/                          # Comprehensive documentation
+│   ├── README.md                 # Main documentation
+│   ├── creating-themes.md        # Complete theme creation guide
+│   ├── updating-themes.md        # Theme customization guide
+│   ├── architecture.md           # Technical architecture details
+│   └── usage.md                  # Usage instructions
 │   └── create-theme.md           # Custom theme creation guide
 │
 └── assets/                        # Preview images and resources

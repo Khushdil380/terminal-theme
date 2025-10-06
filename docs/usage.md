@@ -1,53 +1,69 @@
-# Usage Guide - PowerShell Theme Framework
+# Usage Guide - PowerShell Terminal Framework
 
-This guide covers all aspects of using the PowerShell Theme Framework, from basic installation to advanced customization.
+This guide covers using the truly modular PowerShell Terminal Framework with complete theme independence and customization capabilities.
 
-## 📦 Installation
+## 📦 Quick Start
 
 ### Prerequisites
 
-Before installing, ensure you have:
+Before using, ensure you have:
 
 1. **PowerShell 5.1+** or **PowerShell Core 6.0+**
 2. **Nerd Font** installed (recommended: MonaspiceXe Nerd Font Mono)
 3. **Terminal with ANSI support** (Windows Terminal, VS Code, ConEmu, etc.)
-4. **Git** (optional, for git branch display)
+4. **Git** (optional, for git status display)
 
-### Basic Installation
+### Basic Usage
 
-1. **Download or clone** the PowerShell-Themes repository
-2. **Open PowerShell as Administrator** (if needed for profile access)
-3. **Navigate** to the PowerShell-Themes directory
-4. **Run the installer**:
+1. **Navigate** to the Terminal directory
+2. **Load the framework**:
    ```powershell
-   .\scripts\install.ps1
+   . .\Terminal.ps1
+   ```
+3. **Display your terminal**:
+   ```powershell
+   Show-Terminal
    ```
 
-### Installation Options
+### Theme Management
 
 ```powershell
-# Install with default theme
-.\scripts\install.ps1
+# List available themes
+Get-AvailableThemes
 
-# Install with specific theme
-.\scripts\install.ps1 -ThemeName retro-neon
+# Switch to a different theme
+Set-Theme "gradient-modern"
 
-# Force reinstall (overwrites existing installation)
-.\scripts\install.ps1 -Force
+# Get current theme
+Get-CurrentTheme
 
-# Install with minimal theme
-.\scripts\install.ps1 -ThemeName minimal
+# Show terminal with current theme
+Show-Terminal
 ```
+
+### Available Themes
+
+The framework includes these built-in themes:
+- **default**: Clean, professional appearance
+- **arrows-modern**: Modern with arrow separators
+- **gradient-modern**: Colorful gradients and modern styling
+- **retro-neon**: Cyberpunk-inspired neon colors
+- **minimal**: Ultra-clean, minimalist design
 
 ### Verification
 
-After installation, verify everything works:
+Test your installation:
 
 ```powershell
-# Restart PowerShell or reload profile
-. $PROFILE
+# Load the framework
+. .\Terminal.ps1
 
-# Test the installation
+# Display terminal
+Show-Terminal
+
+# Try different themes
+Set-Theme "arrows-modern"
+Show-Terminal
 Test-PSThemeSetup
 
 # List available themes

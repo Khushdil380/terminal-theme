@@ -376,4 +376,4 @@ function Compress-Path {
     return "...$separator$last"
 }
 
-# Functions and variables are available globally when dot-sourced
+# Core utility functions and variables are available globally when dot-sourced

@@ -1,22 +1,32 @@
 # PowerShell Theme Framework
 
-[![PowerShell](https://img.shields.io/badge/PowerShell-5391FE?style=flat&logo=powershell&logoColor=white)](https://github.com/PowerShell/PowerShell)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Platform](https://img.shields.io/badge/platform-Windows-blue.svg)](https://www.microsoft.com/windows)
+[![PowerShell](https://img.shields.io/badge/PowerShell-5391FE?style=flat&logo=powershell&logoColor=white)](https://github.com/PowerShell/PowerShell)  
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)  
+[![Platform](https://img.shields.io/badge/platform-Windows-blue.svg)](https://www.microsoft.com/windows)  
+[![Architecture](https://img.shields.io/badge/Architecture-Truly%20Modular-brightgreen.svg)](#-true-modularity)
 
-A modular Windows PowerShell theme framework inspired by oh-my-posh, designed for easy customization and professional-looking prompts.
+A **truly modular** Windows PowerShell theme framework with **complete theme independence**. Each theme can be customized individually without affecting others.
+
+## 🎯 **True Modularity** - NEW!
+
+**✅ 100% Independent Themes**: Each theme has its own complete rendering logic  
+**✅ Zero Core Dependencies**: Update any theme without touching core files  
+**✅ Complete Customization**: Colors, spacing, separators, and behavior per theme  
+**✅ Risk-Free Updates**: Modify one theme without breaking others  
 
 ## ✨ Features
 
-- 🧩 **Modular Design** - Easy to add, remove, or customize prompt blocks
-- 🎨 **JSON Configuration** - Simple theme definition using JSON files  
-- 🎭 **Multiple Themes** - Built-in themes: default, retro-neon, gradient-modern, minimal
-- � **Theme Persistence** - Automatically saves and loads your preferred theme across sessions
-- �🔠 **Nerd Font Support** - Beautiful icons and symbols using Nerd Fonts
-- 🌿 **Git Integration** - Shows branch, status, and changes automatically
-- ⚙️ **Easy Management** - Simple install/uninstall scripts
-- 🌈 **ANSI Support** - Full color support with graceful fallback
-- 💼 **Professional** - Modern, clean prompt designs
+- 🎯 **True Modularity** - Each theme is completely self-contained and independent
+- 🎨 **Complete Customization** - Modify colors, spacing, separators, and behavior per theme
+- 🧩 **Modular Blocks** - Easy to add, remove, or customize prompt blocks
+- 📝 **JSON Configuration** - Simple theme definition using JSON files  
+- 🎭 **5 Built-in Themes** - arrows-modern, gradient-modern, default, retro-neon, minimal
+- 💾 **Theme Persistence** - Automatically saves and loads your preferred theme
+- � **Nerd Font Support** - Beautiful icons and symbols with fallback
+- 🌿 **Git Integration** - Branch, status, and changes automatically
+- ⚙️ **Easy Management** - Simple commands and scripts
+- 🌈 **Color Support** - Full ANSI colors with graceful fallback
+- 💼 **Professional** - Modern, clean, customizable designs
 
 ## 🚀 Quick Start
 
@@ -89,6 +99,72 @@ Themes are automatically saved when you change them with `Set-PSTheme`. Your sel
 - ✅ System restarts
 - ✅ Terminal application restarts
 
+## 🎯 **True Modular Architecture**
+
+### **Individual Theme Customization**
+
+Each theme is **completely independent** with its own dedicated folder:
+
+```
+core/{theme-name}/
+├── colors.ps1     # 🎨 Colors, text styles, custom color functions
+├── utils.ps1      # 🔧 Rendering logic, spacing, separators, icons
+└── renderer.ps1   # 🎭 Theme structure, blocks, layout
+```
+
+### **What You Can Customize Per Theme:**
+
+#### **🎨 Colors & Styling** (`colors.ps1`)
+- Block background/foreground colors
+- Text colors (command, error, success)
+- Custom color palettes and functions
+- Theme-specific color schemes
+
+#### **🔧 Rendering & Spacing** (`utils.ps1`)  
+- Block padding and spacing
+- Separator styles and characters
+- Icon handling and placement
+- PowerLine arrow behavior
+- Block rendering logic
+
+#### **🎭 Structure & Layout** (`renderer.ps1`)
+- Which blocks to display
+- Block order and arrangement  
+- Theme-specific conditional logic
+- Overall prompt structure
+
+### **✅ Complete Independence**
+
+- **✅ Zero Risk**: Modify any theme without affecting others
+- **✅ Full Control**: Customize every aspect of individual themes
+- **✅ No Conflicts**: Themes never interfere with each other
+- **✅ Easy Updates**: Change only what you want, where you want
+
+## 🎨 **Theme Customization Examples**
+
+### **Example 1: Change Colors**
+```powershell
+# Edit: core/gradient-modern/colors.ps1
+$GradientModernColors = @{
+    'primary' = 'Red'      # Change from Magenta to Red
+    'secondary' = 'Yellow' # Change background color
+    'command' = 'Green'    # Add custom command color
+}
+```
+
+### **Example 2: Adjust Spacing**
+```powershell
+# Edit: core/gradient-modern/utils.ps1 - Line ~105
+$paddedContent = "   $Content   "  # Triple spaces for more padding
+```
+
+### **Example 3: Custom Separators**
+```powershell
+# Edit: core/minimal/utils.ps1 - Non-powerline section
+$paddedContent = "[ $Content ]"  # Use brackets instead of spaces
+Write-Host " >> " -NoNewline     # Custom separator between blocks
+```
+
 ## 📋 Requirements
 
 - **Windows PowerShell 5.1+** or **PowerShell Core 6.0+**
@@ -98,9 +174,15 @@ Themes are automatically saved when you change them with `Set-PSTheme`. Your sel
 
 ## 📖 Documentation
 
+### **🎯 Theme Customization**
+- **[� Updating Existing Themes](docs/updating-themes.md)** - Customize colors, spacing, separators
+- **[🎨 Creating New Themes](docs/creating-themes.md)** - Step-by-step theme creation guide
+- **[🏗️ Architecture Guide](docs/architecture.md)** - Understanding the modular structure
+
+### **📚 General Documentation**  
 - **[📚 Usage Guide](docs/usage.md)** - Complete usage instructions
-- **[🎨 Theme Creation](docs/create-theme.md)** - How to create custom themes
 - **[📋 API Reference](docs/README.md)** - Detailed technical documentation
+- **[🚀 Quick Examples](docs/examples.md)** - Common customization examples
 
 ## 🛠 Management Scripts
 
